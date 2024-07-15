@@ -3321,4 +3321,17 @@ if(window.\(JAVASCRIPT_BRIDGE_NAME)[\(_callHandlerID)] != null) {
     deinit {
         debugPrint("InAppWebView - dealloc")
     }
+
+    private var lastTrackedPosition = CGPoint(x: 0, y: 0)
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if !scrollView.isDragging {
+            scrollView.contentOffset = lastTrackedPosition
+        }
+        
+        if scrollView.isTracking {
+            lastTrackedPosition = scrollView.contentOffset
+        }
+        
+        print("isTracking - \(scrollView.isTracking)")
+    }
 }
